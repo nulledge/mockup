@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Environment;
 import android.os.Process;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -49,8 +50,13 @@ import Core.UserProfile;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    String DIRECTORY = "usabilityTest";
-    String FILE = "log.txt";
+    public static final String DIRECTORY = Environment.DIRECTORY_DOCUMENTS;
+    public static final String FILE = "log.txt";
+
+    private static final int READ_WRITE_EXTERNAL_DIR_PERMISSION_REQUEST = 105;
+
+    private static int _permissionGranted = PackageManager.PERMISSION_DENIED;
+    public static int PermissionGranted() { return _permissionGranted; }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,184 +66,66 @@ public class RegisterActivity extends AppCompatActivity {
 
         UserProfile._activity = this;
         UserProfile.GetInstance().start();
-        SimpleDateFormat format = new SimpleDateFormat( "yyyy/MM/dd hh:mm:ss" );
-        StringBuffer output = new StringBuffer();
-        try{
-            int permission = ActivityCompat.checkSelfPermission(UserProfile._activity, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-            if (permission != PackageManager.PERMISSION_GRANTED) {
-                String[] permissions = { Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE };
-                // We don't have permission so prompt the user
-                ActivityCompat.requestPermissions(
-                        UserProfile._activity,
-                        permissions,
-                        1
-                );
-            }
 
-            File dir = Environment.getExternalStoragePublicDirectory( Environment.DIRECTORY_DOWNLOADS );
+        guaranteePermission();
+
+        try{
+            File dir = Environment.getExternalStoragePublicDirectory( DIRECTORY );
             if( dir.exists() == false )
                 dir.mkdirs();
 
-            File file = new File( dir, "log.txt" );
-/*
-            FileInputStream fis = new FileInputStream( file );
-//            FileInputStream fis = openFileInput( "log.txt" );
-            BufferedReader buffer = new BufferedReader( new InputStreamReader(fis) );
-            String str = buffer.readLine();
-            while( str != null ) {
-                output.append( str + "\n" );
-                String[] strs = str.split( ", ");
-                if( strs.length != 3 ) {
-                    throw new Exception("Wrong format! Can't load old log!");
-                }
-                Date date = format.parse( strs[0] );
-                EventType eventType;
-                if( strs[1].contains( "Register" ) ) {
-                    eventType = EventType.Register;
-                }
-                else if( strs[1].contains( "Click") ) {
-                    eventType = EventType.Click;
-                }
-                else if( strs[1].contains( "LongClick" ) ) {
-                    eventType = EventType.LongClick;
-                }
-                else if( strs[1].contains( "Slide") ) {
-                    eventType = EventType.Slide;
-                }
-                else {
-                    throw new Exception( "Wrong format! Can't load old log!" );
-                }
-                if( strs[2].equals( "" ) )
-                    strs[2] = "None";
-                UserProfile.GetInstance().addEvent( date, eventType, strs[2] );
-                str = buffer.readLine();
-            }
-            buffer.close();*/
+            File file = new File( dir, FILE );
         }
         catch(Exception e){
             Toast.makeText( this, e.toString(), Toast.LENGTH_LONG ).show();
         }
         UserProfile.GetInstance().stop();
 
-/*        findViewById( R.id.registerButtonReset ).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                deleteFile( "log.txt" );
-            }
-        });*/
-
         findViewById( R.id.registerButtonRegister ).setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        UserProfile userProfile = UserProfile.GetInstance();
-
-                        String name = ((EditText)findViewById( R.id.registerTextViewID )).getText().toString();
-                        int buttonId = ((RadioGroup)findViewById( R.id.registerTaskGroup )).getCheckedRadioButtonId();
-                        TaskType taskType = TaskType.Task1;
-
-                        switch ( buttonId ) {
-                            case R.id.registerTask1:
-                                taskType = TaskType.Task1;
-                                break;
-                            case R.id.registerTask2:
-                                taskType = TaskType.Task2;
-                                break;
-                            case R.id.registerTask3:
-                                taskType = TaskType.Task3;
-                                break;
-                        }
-
-                        userProfile.setProfile( name, taskType );
-                        userProfile.start();
-                        if( name.equals( "" ) )
-                            name = "None";
-                        userProfile.addEvent(EventType.Register, name );
-                        userProfile.addEvent(EventType.Register, buttonId );
-
-                        Intent messageListActivity = new Intent(v.getContext(), MessageListActivity.class);
-                        startActivity( messageListActivity );
-                    }
-                }
-        );
-        findViewById(R.id.registerButtonLog).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String fileName = "log.txt";
-                FileOutputStream fos;
-
-                try {
-
-                    int permission = ActivityCompat.checkSelfPermission(UserProfile._activity, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-
-                    if (permission != PackageManager.PERMISSION_GRANTED) {
-                        String[] permissions = { Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE };
-                        // We don't have permission so prompt the user
-                        ActivityCompat.requestPermissions(
-                                UserProfile._activity,
-                                permissions,
-                                1
-                        );
-                    }
-
-
-                    File dir = Environment.getExternalStoragePublicDirectory( Environment.DIRECTORY_DOWNLOADS);
-                    if( dir.exists() == false )
-                        dir.mkdirs();
-
-                    File file = new File( dir, "log.txt" );
-
-                    FileWriter fileWriter = new FileWriter( file );
-                    fileWriter.append( UserProfile.GetInstance().toString() );
-                    fileWriter.flush();
-                    fileWriter.close();
-
-                    /*fos = openFileOutput( fileName, Context.MODE_PRIVATE );
-                    fos.write( UserProfile.GetInstance().toString().getBytes() );
-                    fos.close();*/
-
-/*                    String shareBody = UserProfile.GetInstance().toString();
-                    Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
-                    sharingIntent.setType("text/plain");
-                    sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "log.txt");
-                    sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
-                    startActivity(Intent.createChooser(sharingIntent, ""));*/
-
-                    /*File toSend = new File( getFilesDir() + "/" + fileName );
-                    Intent intent = new Intent();
-                    intent.setAction( Intent.ACTION_VIEW );
-                    Uri uri = FileProvider.getUriForFile( UserProfile.GetInstance()._activity, getApplicationContext().getPackageName() + ".provider", toSend );
-                    intent.setDataAndType( uri, "text/plain" );
-                    startActivity( intent );*/
-
-
-                    Toast.makeText( UserProfile.GetInstance()._activity, "Save Success!", Toast.LENGTH_SHORT ).show();
-                }
-                catch(Exception e) {
-                    Toast.makeText( UserProfile.GetInstance()._activity, e.toString(), Toast.LENGTH_SHORT ).show();
-                }
-
-                /*  Save to SD card
-                String dir = Environment.getExternalStorageDirectory().getAbsolutePath();
-                String fileName = dir + "/log.txt";
-
-                try {
-                    FileOutputStream fos = new FileOutputStream( fileName );
-                    fos.write( UserProfile.GetInstance().toString().getBytes() );
-                    fos.close();
-
-                    Toast.makeText( UserProfile.GetInstance()._activity, "Save to: " + getFilesDir() + "/" + FILE, Toast.LENGTH_SHORT ).show();
-                }
-                catch(Exception e) {
-                    Toast.makeText( UserProfile.GetInstance()._activity, e.toString(), Toast.LENGTH_SHORT ).show();
-                }*/
-            }
-        });
+                new RegisterOnClickListener() );
+        findViewById(R.id.registerButtonLog).setOnClickListener(
+                new LogOnClickListener() );
     }
 
 
     @Override
     public void onBackPressed() {
         UserProfile.GetInstance().addEvent( EventType.Click, "registerSystemBackButton" );
+    }
+
+    static public void guaranteePermission() {
+        int permissionWrite = ContextCompat.checkSelfPermission(
+                UserProfile._activity, Manifest.permission.WRITE_EXTERNAL_STORAGE );
+        int permissionRead = ContextCompat.checkSelfPermission(
+                UserProfile._activity, Manifest.permission.WRITE_EXTERNAL_STORAGE );
+
+        if( permissionWrite == PackageManager.PERMISSION_GRANTED
+                && permissionRead == PackageManager.PERMISSION_GRANTED ) {
+            _permissionGranted = PackageManager.PERMISSION_GRANTED;
+            return;
+        }
+
+        ActivityCompat.requestPermissions( UserProfile._activity,
+                new String[]{
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE },
+                READ_WRITE_EXTERNAL_DIR_PERMISSION_REQUEST
+        );
+    }
+
+    @Override
+    public void onRequestPermissionsResult( int requestCode,
+                                            String[] permissions, int[] grantResults ) {
+        switch( requestCode ) {
+            case READ_WRITE_EXTERNAL_DIR_PERMISSION_REQUEST:
+                if( grantResults.length == 0 )
+                    return;
+                _permissionGranted = PackageManager.PERMISSION_GRANTED;
+                break;
+
+            default:
+                break;
+        }
+
     }
 }

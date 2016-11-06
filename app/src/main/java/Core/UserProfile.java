@@ -27,6 +27,8 @@ import java.util.ListIterator;
  */
 
 public class UserProfile {
+    static SimpleDateFormat _format = new SimpleDateFormat( "yyyy/MM/dd hh:mm:ss" );
+
     static public UserProfile GetInstance() {
         if( _instance == null )
             _instance = new UserProfile();

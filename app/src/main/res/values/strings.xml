@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Mockup</string>
+    <string name="activity_message_list_edit">Edit</string>
+</resources>

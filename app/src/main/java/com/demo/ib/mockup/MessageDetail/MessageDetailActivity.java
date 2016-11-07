@@ -1,28 +1,23 @@
 package com.demo.ib.mockup.MessageDetail;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.demo.ib.mockup.MessageCreate.MessageWrite;
-import com.demo.ib.mockup.MessageList.MessageListItem;
-import com.demo.ib.mockup.MessageList.MessageListViewAdapter;
 import com.demo.ib.mockup.R;
 import com.demo.ib.mockup.Register.enums.EventType;
 import com.demo.ib.mockup.Register.enums.RegisterType;
 
 import Core.DummyMessage;
 import Core.MessageData;
-import Core.UserProfile;
+import Core.Info.UserProfile;
+import Core.Util.Logger;
 
 /**
  * Created by nulledge on 2016-09-29.
@@ -38,7 +33,7 @@ public class MessageDetailActivity extends Activity {
         findViewById(R.id.messageDetailBack).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UserProfile.GetInstance().addEvent(EventType.Click, R.id.messageDetailBack );
+                Logger.addEvent(EventType.Click, R.id.messageDetailBack );
                 finish();
             }
         });
@@ -87,7 +82,7 @@ public class MessageDetailActivity extends Activity {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if( hasFocus )
-                    UserProfile.GetInstance().addEvent( EventType.Click, R.id.messageDetailMessage );
+                    Logger.addEvent( EventType.Click, R.id.messageDetailMessage );
             }
         });
 
@@ -98,7 +93,7 @@ public class MessageDetailActivity extends Activity {
 
     @Override
     public void onBackPressed() {
-        UserProfile.GetInstance().addEvent( EventType.Click, "messageDetailSystemBackButton" );
+        Logger.addEvent( EventType.Click, "messageDetailSystemBackButton" );
         finish();
     }
 

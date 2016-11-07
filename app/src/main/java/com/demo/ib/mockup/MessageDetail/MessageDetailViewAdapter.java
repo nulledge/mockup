@@ -1,25 +1,22 @@
 package com.demo.ib.mockup.MessageDetail;
 
-import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.demo.ib.mockup.MessageList.MessageListItem;
 import com.demo.ib.mockup.R;
 import com.demo.ib.mockup.Register.enums.EventType;
-import com.demo.ib.mockup.Register.enums.RegisterType;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
 import Core.Message;
-import Core.UserProfile;
+import Core.Info.UserProfile;
+import Core.Util.Logger;
 
 /**
  * Created by nulledge on 2016-09-29.
@@ -68,26 +65,26 @@ public class MessageDetailViewAdapter extends BaseAdapter {
         date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UserProfile.GetInstance().addEvent(EventType.Click, R.id.messageDetailItemDate);
+                Logger.addEvent(EventType.Click, R.id.messageDetailItemDate);
             }
         });
         date.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                UserProfile.GetInstance().addEvent(EventType.LongClick, R.id.messageDetailItemDate);
+                Logger.addEvent(EventType.LongClick, R.id.messageDetailItemDate);
                 return true;
             }
         });
         text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UserProfile.GetInstance().addEvent(EventType.Click, R.id.messageDetailItemMessage);
+                Logger.addEvent(EventType.Click, R.id.messageDetailItemMessage);
             }
         });
         text.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                UserProfile.GetInstance().addEvent(EventType.LongClick, R.id.messageDetailItemMessage);
+                Logger.addEvent(EventType.LongClick, R.id.messageDetailItemMessage);
                 return true;
             }
         });

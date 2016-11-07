@@ -1,52 +1,23 @@
 package com.demo.ib.mockup.Register;
 
 import android.Manifest;
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
+import android.app.Activity;
 import android.content.pm.PackageManager;
-import android.media.audiofx.EnvironmentalReverb;
-import android.net.Uri;
 import android.os.Environment;
-import android.os.Process;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.KeyEvent;
-import android.view.View;
 import android.view.Window;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import com.demo.ib.mockup.MessageList.MessageListActivity;
 import com.demo.ib.mockup.R;
 import com.demo.ib.mockup.Register.enums.EventType;
-import com.demo.ib.mockup.Register.enums.TaskType;
 
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.net.URI;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
-import Core.Message;
-import Core.MessageData;
-import Core.UserProfile;
+import Core.Util.ContextResolver;
+import Core.Util.Logger;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -64,10 +35,9 @@ public class RegisterActivity extends AppCompatActivity {
         requestWindowFeature( Window.FEATURE_NO_TITLE );
         setContentView( R.layout.activity_register );
 
-        UserProfile._activity = this;
-        UserProfile.GetInstance().start();
+        ContextResolver.Init( this );
 
-        guaranteePermission();
+        GrantPermissions();
 
         try{
             File dir = Environment.getExternalStoragePublicDirectory( DIRECTORY );
@@ -79,7 +49,6 @@ public class RegisterActivity extends AppCompatActivity {
         catch(Exception e){
             Toast.makeText( this, e.toString(), Toast.LENGTH_LONG ).show();
         }
-        UserProfile.GetInstance().stop();
 
         findViewById( R.id.registerButtonRegister ).setOnClickListener(
                 new RegisterOnClickListener() );
@@ -90,14 +59,14 @@ public class RegisterActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        UserProfile.GetInstance().addEvent( EventType.Click, "registerSystemBackButton" );
+        Logger.addEvent( EventType.Click, "registerSystemBackButton" );
     }
 
-    static public void guaranteePermission() {
+    static public void GrantPermissions() {
         int permissionWrite = ContextCompat.checkSelfPermission(
-                UserProfile._activity, Manifest.permission.WRITE_EXTERNAL_STORAGE );
+                ContextResolver.getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE );
         int permissionRead = ContextCompat.checkSelfPermission(
-                UserProfile._activity, Manifest.permission.WRITE_EXTERNAL_STORAGE );
+                ContextResolver.getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE );
 
         if( permissionWrite == PackageManager.PERMISSION_GRANTED
                 && permissionRead == PackageManager.PERMISSION_GRANTED ) {
@@ -105,7 +74,7 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
-        ActivityCompat.requestPermissions( UserProfile._activity,
+        ActivityCompat.requestPermissions( ContextResolver.getActivity(),
                 new String[]{
                         Manifest.permission.READ_EXTERNAL_STORAGE,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE },

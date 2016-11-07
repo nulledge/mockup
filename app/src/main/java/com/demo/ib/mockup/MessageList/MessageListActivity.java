@@ -1,34 +1,26 @@
 package com.demo.ib.mockup.MessageList;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.MainThread;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
-import android.widget.Adapter;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.TimePicker;
 
 import com.demo.ib.mockup.MessageCreate.MessageWrite;
 import com.demo.ib.mockup.MessageDetail.MessageDetailActivity;
@@ -37,12 +29,12 @@ import com.demo.ib.mockup.Register.enums.EventType;
 import com.demo.ib.mockup.Register.enums.RegisterType;
 import com.demo.ib.mockup.Register.enums.TaskType;
 
-import java.util.Calendar;
 import java.util.HashMap;
 
 import Core.DummyMessage;
 import Core.MessageData;
-import Core.UserProfile;
+import Core.Info.UserProfile;
+import Core.Util.Logger;
 
 /**
  * Created by nulledge on 2016-09-29.
@@ -72,7 +64,7 @@ public class MessageListActivity extends Activity {
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                UserProfile.GetInstance().addEvent( EventType.LongClick, R.id.messageListListView );
+                Logger.addEvent( EventType.LongClick, R.id.messageListListView );
                 refreshListView();
                 return false;
             }
@@ -95,7 +87,7 @@ public class MessageListActivity extends Activity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        UserProfile.GetInstance().addEvent( EventType.Click, R.id.messageListButtonCreateMessage );
+                        Logger.addEvent( EventType.Click, R.id.messageListButtonCreateMessage );
                         refreshListView();
                         Intent messageWriteActivity = new Intent(v.getContext(), MessageWrite.class);
                         startActivity( messageWriteActivity );
@@ -105,7 +97,7 @@ public class MessageListActivity extends Activity {
         findViewById( R.id.messageListButtonCreateMessage ).setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                UserProfile.GetInstance().addEvent( EventType.LongClick, R.id.messageListButtonCreateMessage );
+                Logger.addEvent( EventType.LongClick, R.id.messageListButtonCreateMessage );
                 refreshListView();
                 return false;
             }
@@ -118,21 +110,21 @@ public class MessageListActivity extends Activity {
         findViewById(R.id.messageListTextEdit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UserProfile.GetInstance().addEvent( EventType.Click, R.id.messageListTextEdit );
+                Logger.addEvent( EventType.Click, R.id.messageListTextEdit );
                 refreshListView();
             }
         });
         findViewById(R.id.messageListTextMessage).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UserProfile.GetInstance().addEvent(EventType.Click, R.id.messageListTextMessage );
+                Logger.addEvent(EventType.Click, R.id.messageListTextMessage );
                 refreshListView();
             }
         });
         findViewById(R.id.messageListTextEdit).setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                UserProfile.GetInstance().addEvent( EventType.LongClick, R.id.messageListTextEdit );
+                Logger.addEvent( EventType.LongClick, R.id.messageListTextEdit );
                 refreshListView();
                 return true;
             }
@@ -140,7 +132,7 @@ public class MessageListActivity extends Activity {
         findViewById(R.id.messageListTextMessage).setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                UserProfile.GetInstance().addEvent( EventType.LongClick, R.id.messageListTextMessage );
+                Logger.addEvent( EventType.LongClick, R.id.messageListTextMessage );
                 refreshListView();
                 return true;
             }
@@ -165,7 +157,7 @@ public class MessageListActivity extends Activity {
                 ImageView icon = (ImageView)findViewById(R.id.messageListSearchIcon);
                 RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)icon.getLayoutParams();
                 if( hasFocus ) {
-                    UserProfile.GetInstance().addEvent( EventType.Click, R.id.messageListSearch );
+                    Logger.addEvent( EventType.Click, R.id.messageListSearch );
                     search.setGravity(Gravity.LEFT );
                     params.addRule( RelativeLayout.CENTER_HORIZONTAL, 0 );
                     icon.setLayoutParams( params );
@@ -327,7 +319,7 @@ public class MessageListActivity extends Activity {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             if (_swipeDetector.swipeDetected()) {
                 if (_swipeDetector.getAction() == Action.RL) {
-                    UserProfile.GetInstance().addEvent( EventType.Slide, R.id.messageListListView );
+                    Logger.addEvent( EventType.Slide, R.id.messageListListView );
 
                     ListView listView = (ListView)findViewById(R.id.messageListListView);
                     MessageListViewAdapter adapter = (MessageListViewAdapter)listView.getAdapter();
@@ -345,7 +337,7 @@ public class MessageListActivity extends Activity {
                 }
             }
 
-            UserProfile.GetInstance().addEvent( EventType.Click, R.id.messageListListView );
+            Logger.addEvent( EventType.Click, R.id.messageListListView );
             if( UserProfile.GetInstance().getTask() == TaskType.Task3 ) {
                 if( _lock.containsKey( position ) == false ) {
                     _lock.put( position, Boolean.TRUE );
@@ -380,7 +372,7 @@ public class MessageListActivity extends Activity {
 
     @Override
     public void onBackPressed() {
-        UserProfile.GetInstance().addEvent( EventType.Click, "messageListSystemBackButton" );
+        Logger.addEvent( EventType.Click, "messageListSystemBackButton" );
         finish();
     }
 }

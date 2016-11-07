@@ -1,14 +1,11 @@
 package com.demo.ib.mockup.MessageList;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.demo.ib.mockup.R;
@@ -22,7 +19,8 @@ import java.util.Date;
 import Core.DummyMessage;
 import Core.Message;
 import Core.MessageData;
-import Core.UserProfile;
+import Core.Info.UserProfile;
+import Core.Util.Logger;
 
 /**
  * Created by nulledge on 2016-09-29.
@@ -100,7 +98,7 @@ public class MessageListViewAdapter extends BaseAdapter {
 
         @Override
         public void onClick(View v) {
-            UserProfile.GetInstance().addEvent( EventType.Click, R.id.messageListDelete );
+            Logger.addEvent( EventType.Click, R.id.messageListDelete );
             _item._visible = false;
             _view.findViewById(R.id.messageListDelete).setVisibility( View.GONE );
             for( int i = 0; i < DummyMessage.getInstance()._messages.size(); i ++ ) {

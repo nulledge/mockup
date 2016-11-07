@@ -1,9 +1,7 @@
 package com.demo.ib.mockup.Register;
 
-import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Environment;
-import android.support.v4.app.ActivityCompat;
 import android.view.View;
 import android.widget.Toast;
 
@@ -11,7 +9,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 
-import Core.UserProfile;
+import Core.Info.UserProfile;
+import Core.Util.ContextResolver;
 
 /**
  * Created by nulledge on 2016-11-06.
@@ -19,7 +18,7 @@ import Core.UserProfile;
 public class LogOnClickListener implements View.OnClickListener {
     @Override
     public void onClick(View v) {
-        RegisterActivity.guaranteePermission();
+        RegisterActivity.GrantPermissions();
         if( RegisterActivity.PermissionGranted() == PackageManager.PERMISSION_DENIED )
             return;
 
@@ -36,10 +35,10 @@ public class LogOnClickListener implements View.OnClickListener {
             fileWriter.flush();
             fileWriter.close();
 
-            Toast.makeText( UserProfile.GetInstance()._activity, "Save Success!", Toast.LENGTH_SHORT ).show();
+            Toast.makeText( ContextResolver.getApplicationContext(), "Save Success!", Toast.LENGTH_SHORT ).show();
         }
         catch(Exception e) {
-            Toast.makeText( UserProfile.GetInstance()._activity, e.toString(), Toast.LENGTH_SHORT ).show();
+            Toast.makeText( ContextResolver.getApplicationContext(), e.toString(), Toast.LENGTH_SHORT ).show();
         }
     }
 }

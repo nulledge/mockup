@@ -1,24 +1,20 @@
 package com.demo.ib.mockup.MessageCreate;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
-import android.widget.ListView;
 
-import com.demo.ib.mockup.MessageList.MessageListViewAdapter;
 import com.demo.ib.mockup.R;
 import com.demo.ib.mockup.Register.enums.EventType;
 import com.demo.ib.mockup.Register.enums.RegisterType;
 
-import Core.UserProfile;
+import Core.Info.UserProfile;
+import Core.Util.Logger;
 
 /**
  * Created by nulledge on 2016-09-29.
@@ -41,7 +37,7 @@ public class MessageWrite extends Activity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        UserProfile.GetInstance().addEvent(EventType.Click, R.id.messageCreateButtonCancel );
+                        Logger.addEvent(EventType.Click, R.id.messageCreateButtonCancel );
                         finish();
                     }
                 }
@@ -49,7 +45,7 @@ public class MessageWrite extends Activity {
         findViewById( R.id.messageCreateButtonCancel ).setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                UserProfile.GetInstance().addEvent(EventType.LongClick, R.id.messageCreateButtonCancel );
+                Logger.addEvent(EventType.LongClick, R.id.messageCreateButtonCancel );
                 return false;
             }
         });
@@ -85,21 +81,21 @@ public class MessageWrite extends Activity {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if( hasFocus )
-                    UserProfile.GetInstance().addEvent( EventType.Click, R.id.messageCreateReceiver );
+                    Logger.addEvent( EventType.Click, R.id.messageCreateReceiver );
             }
         });
         findViewById(R.id.messageCreateMessage).setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if( hasFocus )
-                    UserProfile.GetInstance().addEvent( EventType.Click, R.id.messageCreateMessage );
+                    Logger.addEvent( EventType.Click, R.id.messageCreateMessage );
             }
         });
     }
 
     @Override
     public void onBackPressed() {
-        UserProfile.GetInstance().addEvent( EventType.Click, "messageCreateSystemBackButton" );
+        Logger.addEvent( EventType.Click, "messageCreateSystemBackButton" );
         finish();
     }
 

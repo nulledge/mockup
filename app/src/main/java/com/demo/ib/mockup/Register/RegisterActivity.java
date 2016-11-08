@@ -1,7 +1,6 @@
 package com.demo.ib.mockup.Register;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
@@ -26,8 +25,8 @@ public class RegisterActivity extends AppCompatActivity {
 
     private static final int READ_WRITE_EXTERNAL_DIR_PERMISSION_REQUEST = 105;
 
-    private static int _permissionGranted = PackageManager.PERMISSION_DENIED;
-    public static int PermissionGranted() { return _permissionGranted; }
+    private int _permissionGranted = PackageManager.PERMISSION_DENIED;
+    public int PermissionGranted() { return _permissionGranted; }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +36,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         ContextResolver.Init( this );
 
-        GrantPermissions();
+        grantPermissions();
 
         try{
             File dir = Environment.getExternalStoragePublicDirectory( DIRECTORY );
@@ -51,9 +50,9 @@ public class RegisterActivity extends AppCompatActivity {
         }
 
         findViewById( R.id.registerButtonRegister ).setOnClickListener(
-                new RegisterOnClickListener() );
+                new RegisterOnClickListener( this ) );
         findViewById(R.id.registerButtonLog).setOnClickListener(
-                new LogOnClickListener() );
+                new LogOnClickListener( this ) );
     }
 
 
@@ -62,11 +61,11 @@ public class RegisterActivity extends AppCompatActivity {
         Logger.addEvent( EventType.Click, "registerSystemBackButton" );
     }
 
-    static public void GrantPermissions() {
+    public void grantPermissions() {
         int permissionWrite = ContextCompat.checkSelfPermission(
-                ContextResolver.getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE );
+                getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE );
         int permissionRead = ContextCompat.checkSelfPermission(
-                ContextResolver.getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE );
+                getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE );
 
         if( permissionWrite == PackageManager.PERMISSION_GRANTED
                 && permissionRead == PackageManager.PERMISSION_GRANTED ) {
@@ -74,7 +73,7 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
-        ActivityCompat.requestPermissions( ContextResolver.getActivity(),
+        ActivityCompat.requestPermissions( this,
                 new String[]{
                         Manifest.permission.READ_EXTERNAL_STORAGE,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE },

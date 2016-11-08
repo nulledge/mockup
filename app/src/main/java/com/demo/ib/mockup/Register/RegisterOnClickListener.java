@@ -1,5 +1,6 @@
 package com.demo.ib.mockup.Register;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
@@ -19,12 +20,19 @@ import Core.Util.Logger;
  * Created by nulledge on 2016-11-06.
  */
 public class RegisterOnClickListener implements View.OnClickListener {
+
+    public RegisterOnClickListener( Activity activity ) {
+        super();
+        _activity = activity;
+    }
+
     @Override
     public void onClick(View v) {
-        UserProfile userProfile = UserProfile.GetInstance();
+        String name = ((EditText) _activity.findViewById( R.id.registerTextViewID ))
+                .getText().toString();
+        int buttonId = ((RadioGroup) _activity.findViewById( R.id.registerTaskGroup ))
+                .getCheckedRadioButtonId();
 
-        String name = ((EditText) ContextResolver.getActivity().findViewById( R.id.registerTextViewID )).getText().toString();
-        int buttonId = ((RadioGroup) ContextResolver.getActivity().findViewById( R.id.registerTaskGroup )).getCheckedRadioButtonId();
         TaskType taskType = TaskType.Task1;
 
         switch ( buttonId ) {
@@ -39,13 +47,17 @@ public class RegisterOnClickListener implements View.OnClickListener {
                 break;
         }
 
-        userProfile.setProfile( name, taskType );
+        UserProfile.setProfile( name, taskType );
         if( name.equals( "" ) )
             name = "None";
-        Logger.addEvent(EventType.Register, name );
-        Logger.addEvent(EventType.Register, buttonId );
+        Logger.addEvent( EventType.Register, name );
+        Logger.addEvent( EventType.Register, buttonId );
 
-        Intent messageListActivity = new Intent(v.getContext(), MessageListActivity.class);
-        ContextResolver.getActivity().startActivity( messageListActivity );
+        Intent messageListActivity = new Intent(
+                _activity.getApplicationContext(),
+                MessageListActivity.class );
+        _activity.startActivity( messageListActivity );
     }
+
+    private Activity _activity;
 }

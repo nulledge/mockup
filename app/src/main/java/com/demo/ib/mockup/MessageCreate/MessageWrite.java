@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
@@ -27,11 +26,11 @@ public class MessageWrite extends Activity {
 
         setContentView( R.layout.activity_message_create );
 
-        UserProfile.GetInstance().registerEventLogger( this, R.id.messageCreateTextNewMessage, RegisterType.Both );
-        UserProfile.GetInstance().registerEventLogger( this, R.id.messageCreateTextTo, RegisterType.Both );
-        UserProfile.GetInstance().registerEventLogger( this, R.id.messageCreateImageCamera, RegisterType.Both );
-        UserProfile.GetInstance().registerEventLogger( this, R.id.messageCreateSendText, RegisterType.Both );
-        UserProfile.GetInstance().registerEventLogger( this, R.id.messageCreateSendImage, RegisterType.Both );
+        UserProfile.getInstance().registerEventLogger( this, R.id.messageCreateTextNewMessage, RegisterType.Both );
+        UserProfile.getInstance().registerEventLogger( this, R.id.messageCreateTextTo, RegisterType.Both );
+        UserProfile.getInstance().registerEventLogger( this, R.id.messageCreateImageCamera, RegisterType.Both );
+        UserProfile.getInstance().registerEventLogger( this, R.id.messageCreateSendText, RegisterType.Both );
+        UserProfile.getInstance().registerEventLogger( this, R.id.messageCreateSendImage, RegisterType.Both );
 
         findViewById( R.id.messageCreateButtonCancel ).setOnClickListener(
                 new View.OnClickListener() {
@@ -75,8 +74,8 @@ public class MessageWrite extends Activity {
             }
         });
 
-        UserProfile.GetInstance().registerEventLogger( this, R.id.messageCreateReceiver, RegisterType.Both );
-        UserProfile.GetInstance().registerEventLogger( this, R.id.messageCreateMessage, RegisterType.Both );
+        UserProfile.getInstance().registerEventLogger( this, R.id.messageCreateReceiver, RegisterType.Both );
+        UserProfile.getInstance().registerEventLogger( this, R.id.messageCreateMessage, RegisterType.Both );
         findViewById(R.id.messageCreateReceiver).setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {

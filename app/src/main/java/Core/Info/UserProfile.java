@@ -22,7 +22,7 @@ import Core.Util.Logger;
 
 public class UserProfile {
 
-    static public UserProfile GetInstance() {
+    static public UserProfile getInstance() {
         if( _instance == null )
             _instance = new UserProfile();
         return _instance;
@@ -33,9 +33,9 @@ public class UserProfile {
         _onRecord = false;
     }
 
-    public boolean setProfile( String name, TaskType taskType ) {
-        _name = name;
-        _task = taskType;
+    static public boolean setProfile( String name, TaskType taskType ) {
+        getInstance()._name = name;
+        getInstance()._task = taskType;
 
         return true;
     }

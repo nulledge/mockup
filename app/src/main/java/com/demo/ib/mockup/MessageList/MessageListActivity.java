@@ -138,10 +138,10 @@ public class MessageListActivity extends Activity {
             }
         });
 
-        //UserProfile.GetInstance().registerEventLogger( this, R.id.messageListTextEdit, RegisterType.Both );
-        //UserProfile.GetInstance().registerEventLogger( this, R.id.messageListTextMessage, RegisterType.Both );
+        //UserProfile.getInstance().registerEventLogger( this, R.id.messageListTextEdit, RegisterType.Both );
+        //UserProfile.getInstance().registerEventLogger( this, R.id.messageListTextMessage, RegisterType.Both );
 
-        if( UserProfile.GetInstance().getTask() == TaskType.Task2 ) {
+        if( UserProfile.getInstance().getTask() == TaskType.Task2 ) {
             ImageView buttonCreateMessage = (ImageView) findViewById(R.id.messageListButtonCreateMessage);
             ViewGroup.LayoutParams params = buttonCreateMessage.getLayoutParams();
             params.width = params.width / 5 * 3;
@@ -149,7 +149,7 @@ public class MessageListActivity extends Activity {
             buttonCreateMessage.setLayoutParams( params );
         }
 
-        UserProfile.GetInstance().registerEventLogger( this, R.id.messageListSearch, RegisterType.Both );
+        UserProfile.getInstance().registerEventLogger( this, R.id.messageListSearch, RegisterType.Both );
         ((EditText)findViewById(R.id.messageListSearch)).setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -338,7 +338,7 @@ public class MessageListActivity extends Activity {
             }
 
             Logger.addEvent( EventType.Click, R.id.messageListListView );
-            if( UserProfile.GetInstance().getTask() == TaskType.Task3 ) {
+            if( UserProfile.getInstance().getTask() == TaskType.Task3 ) {
                 if( _lock.containsKey( position ) == false ) {
                     _lock.put( position, Boolean.TRUE );
                     new Handler().postDelayed(new CustomRunnable(view, position), 3000);

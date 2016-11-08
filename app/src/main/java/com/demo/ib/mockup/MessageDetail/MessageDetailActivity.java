@@ -37,20 +37,20 @@ public class MessageDetailActivity extends Activity {
                 finish();
             }
         });
-        UserProfile.GetInstance().registerEventLogger( this, R.id.messageDetailBack, RegisterType.LongClick);
+        UserProfile.getInstance().registerEventLogger( this, R.id.messageDetailBack, RegisterType.LongClick);
 
         int selected = getIntent().getIntExtra( "index", -1 );
         MessageData messageData = DummyMessage.getInstance()._messages.get( selected );
-        UserProfile.GetInstance().registerEventLogger( this, R.id.messageDetailReceiver, RegisterType.Both);
+        UserProfile.getInstance().registerEventLogger( this, R.id.messageDetailReceiver, RegisterType.Both);
         ((TextView)findViewById(R.id.messageDetailReceiver)).setText( messageData.getReceiver() );
 
         MessageDetailViewAdapter adapter = new MessageDetailViewAdapter();
         ListView listView = (ListView)findViewById(R.id.messageDetailListView);
         listView.setAdapter(adapter);
 
-        UserProfile.GetInstance().registerEventLogger( this, R.id.messageDetailSendImage, RegisterType.Both);
-        UserProfile.GetInstance().registerEventLogger( this, R.id.messageDetailSendText, RegisterType.Both);
-        UserProfile.GetInstance().registerEventLogger( this, R.id.messageDetailImageCamera, RegisterType.Both);
+        UserProfile.getInstance().registerEventLogger( this, R.id.messageDetailSendImage, RegisterType.Both);
+        UserProfile.getInstance().registerEventLogger( this, R.id.messageDetailSendText, RegisterType.Both);
+        UserProfile.getInstance().registerEventLogger( this, R.id.messageDetailImageCamera, RegisterType.Both);
 
         findViewById( R.id.messageDetailSendImage ).setVisibility( View.VISIBLE );
         findViewById( R.id.messageDetailSendText ).setVisibility( View.GONE);
@@ -77,7 +77,7 @@ public class MessageDetailActivity extends Activity {
                 }
             }
         });
-        UserProfile.GetInstance().registerEventLogger( this, R.id.messageDetailMessage, RegisterType.Both );
+        UserProfile.getInstance().registerEventLogger( this, R.id.messageDetailMessage, RegisterType.Both );
         findViewById(R.id.messageDetailMessage).setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {

@@ -26,7 +26,7 @@ public class Logger {
 
 
     static public boolean addEvent(Date date, EventType event, String resourceID ) {
-        if( UserProfile.GetInstance().onRecord() == false )
+        if( UserProfile.getInstance().onRecord() == false )
             return Values.FAIL;
         try {
             getInstance()._logs.add( new EventLog ( date, event, resourceID ) );

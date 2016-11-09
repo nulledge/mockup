@@ -1,18 +1,20 @@
 package com.demo.ib.mockup.MessageList;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
@@ -25,9 +27,9 @@ import android.widget.RelativeLayout;
 import com.demo.ib.mockup.MessageCreate.MessageWrite;
 import com.demo.ib.mockup.MessageDetail.MessageDetailActivity;
 import com.demo.ib.mockup.R;
-import com.demo.ib.mockup.Register.enums.EventType;
-import com.demo.ib.mockup.Register.enums.RegisterType;
-import com.demo.ib.mockup.Register.enums.TaskType;
+import Core.enums.EventType;
+import Core.enums.RegisterType;
+import Core.enums.TaskType;
 
 import java.util.HashMap;
 
@@ -39,7 +41,7 @@ import Core.Util.Logger;
 /**
  * Created by nulledge on 2016-09-29.
  */
-public class MessageListActivity extends Activity {
+public class MessageListActivity extends AppCompatActivity {
 
     private void refreshListView() {
         if( _deleteTarget != null ) {
@@ -52,7 +54,6 @@ public class MessageListActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature( Window.FEATURE_NO_TITLE );
         setContentView( R.layout.activity_message_list );
 
         _lock = new HashMap<Integer, Boolean>();
@@ -374,5 +375,25 @@ public class MessageListActivity extends Activity {
     public void onBackPressed() {
         Logger.addEvent( EventType.Click, "messageListSystemBackButton" );
         finish();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.system_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.menuSaveLog:
+                return true;
+            case R.id.menuSurvey:
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

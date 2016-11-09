@@ -1,16 +1,15 @@
 package Core.Info;
 
-import com.demo.ib.mockup.Register.enums.EventType;
+import Core.enums.EventType;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import Core.Util.Values;
 
 /**
  * Created by nulledge on 2016-11-08.
  */
 public class EventLog {
+    static private final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat( "yyyy/MM/dd hh:mm:ss" );
 
     public EventLog(Date time, EventType event, String name) {
         _time = time;
@@ -21,7 +20,7 @@ public class EventLog {
     @Override
     public String toString() {
         StringBuffer _return = new StringBuffer();
-        _return.append( Values.Format().format( _time ) )
+        _return.append( DATE_FORMAT.format( _time ) )
                 .append( ", " )
                 .append( _event.toString() )
                 .append( ", " )

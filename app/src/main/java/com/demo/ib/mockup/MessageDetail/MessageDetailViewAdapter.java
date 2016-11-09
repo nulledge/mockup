@@ -8,14 +8,13 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.demo.ib.mockup.R;
-import com.demo.ib.mockup.Register.enums.EventType;
+import Core.enums.EventType;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
 import Core.Message;
-import Core.Info.UserProfile;
 import Core.Util.Logger;
 
 /**

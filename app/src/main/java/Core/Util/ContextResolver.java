@@ -17,10 +17,10 @@ public class ContextResolver {
 
     static public boolean Init( Activity activity) {
         if( getInstance()._context != null )
-            return Values.FAIL;
+            return false;
         getInstance()._activity = activity;
         getInstance()._context = activity.getApplicationContext();
-        return Values.SUCCESS;
+        return true;
     }
 
     static public Context getApplicationContext() {

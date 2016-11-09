@@ -11,8 +11,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.demo.ib.mockup.R;
-import com.demo.ib.mockup.Register.enums.EventType;
-import com.demo.ib.mockup.Register.enums.RegisterType;
+import Core.enums.EventType;
+import Core.enums.RegisterType;
 
 import Core.DummyMessage;
 import Core.MessageData;

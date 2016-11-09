@@ -1,6 +1,6 @@
 package Core.Util;
 
-import com.demo.ib.mockup.Register.enums.EventType;
+import Core.enums.EventType;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -27,14 +27,14 @@ public class Logger {
 
     static public boolean addEvent(Date date, EventType event, String resourceID ) {
         if( UserProfile.getInstance().onRecord() == false )
-            return Values.FAIL;
+            return false;
         try {
             getInstance()._logs.add( new EventLog ( date, event, resourceID ) );
         }
         catch (Exception e) {
-            return Values.FAIL;
+            return false;
         }
-        return Values.SUCCESS;
+        return true;
     }
     static public boolean addEvent( EventType event, String resourceID ) {
         return addEvent(

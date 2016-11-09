@@ -1,7 +1,6 @@
 package com.demo.ib.mockup.Register;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 import android.widget.EditText;
@@ -9,11 +8,10 @@ import android.widget.RadioGroup;
 
 import com.demo.ib.mockup.MessageList.MessageListActivity;
 import com.demo.ib.mockup.R;
-import com.demo.ib.mockup.Register.enums.EventType;
-import com.demo.ib.mockup.Register.enums.TaskType;
+import Core.enums.EventType;
+import Core.enums.TaskType;
 
 import Core.Info.UserProfile;
-import Core.Util.ContextResolver;
 import Core.Util.Logger;
 
 /**
@@ -22,7 +20,6 @@ import Core.Util.Logger;
 public class RegisterOnClickListener implements View.OnClickListener {
 
     public RegisterOnClickListener( Activity activity ) {
-        super();
         _activity = activity;
     }
 
@@ -54,9 +51,9 @@ public class RegisterOnClickListener implements View.OnClickListener {
         Logger.addEvent( EventType.Register, buttonId );
 
         Intent messageListActivity = new Intent(
-                _activity.getApplicationContext(),
+                v.getContext(),
                 MessageListActivity.class );
-        _activity.startActivity( messageListActivity );
+        v.getContext().startActivity( messageListActivity );
     }
 
     private Activity _activity;

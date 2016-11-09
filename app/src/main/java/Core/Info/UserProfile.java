@@ -1,19 +1,12 @@
 package Core.Info;
 
 import android.app.Activity;
-import android.util.Log;
 import android.view.View;
 
-import com.demo.ib.mockup.Register.enums.EventType;
-import com.demo.ib.mockup.Register.enums.RegisterType;
-import com.demo.ib.mockup.Register.enums.TaskType;
+import Core.enums.EventType;
+import Core.enums.RegisterType;
+import Core.enums.TaskType;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-
-import Core.DummyMessage;
 import Core.Util.Logger;
 
 /**

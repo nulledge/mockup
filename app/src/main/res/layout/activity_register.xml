@@ -7,7 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".Register.RegisterActivity">
+    tools:context=".Register.Activity.RegisterActivity">
 
     <LinearLayout
         android:layout_centerInParent="true"
@@ -83,11 +83,6 @@
             android:layout_marginTop="@dimen/activity_vertical_margin"
             android:id="@+id/registerButtonRegister"/>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Log"
-            android:id="@+id/registerButtonLog"/>
     </LinearLayout>
 
 </RelativeLayout>

@@ -9,8 +9,8 @@ import android.view.Window;
 import android.widget.EditText;
 
 import com.demo.ib.mockup.R;
-import com.demo.ib.mockup.Register.enums.EventType;
-import com.demo.ib.mockup.Register.enums.RegisterType;
+import Core.enums.EventType;
+import Core.enums.RegisterType;
 
 import Core.Info.UserProfile;
 import Core.Util.Logger;

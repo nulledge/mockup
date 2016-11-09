@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menuSaveLog"
+        android:orderInCategory="100"
+        android:title="기록 저장"
+        />
+
+    <item
+        android:id="@+id/menuSurvey"
+        android:orderInCategory="100"
+        android:title="설문조사"
+        />
+</menu>

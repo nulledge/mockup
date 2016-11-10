@@ -27,6 +27,8 @@ import android.widget.RelativeLayout;
 import com.demo.ib.mockup.MessageCreate.MessageWrite;
 import com.demo.ib.mockup.MessageDetail.MessageDetailActivity;
 import com.demo.ib.mockup.R;
+
+import Core.Util.Save;
 import Core.enums.EventType;
 import Core.enums.RegisterType;
 import Core.enums.TaskType;
@@ -389,6 +391,7 @@ public class MessageListActivity extends AppCompatActivity {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.menuSaveLog:
+                Save.SaveLog( this );
                 return true;
             case R.id.menuSurvey:
                 return true;

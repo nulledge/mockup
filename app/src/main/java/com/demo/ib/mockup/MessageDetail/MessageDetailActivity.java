@@ -2,8 +2,12 @@ package com.demo.ib.mockup.MessageDetail;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
@@ -11,6 +15,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.demo.ib.mockup.R;
+
+import Core.Util.Save;
 import Core.enums.EventType;
 import Core.enums.RegisterType;
 
@@ -22,7 +28,7 @@ import Core.Util.Logger;
 /**
  * Created by nulledge on 2016-09-29.
  */
-public class MessageDetailActivity extends Activity {
+public class MessageDetailActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +101,28 @@ public class MessageDetailActivity extends Activity {
     public void onBackPressed() {
         Logger.addEvent( EventType.Click, "messageDetailSystemBackButton" );
         finish();
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.system_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.menuSaveLog:
+                Save.SaveLog( this );
+                return true;
+            case R.id.menuSurvey:
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
 }

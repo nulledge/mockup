@@ -73,8 +73,6 @@ public class UserProfile {
     static public String getFileName() {
         StringBuffer buffer = new StringBuffer();
         buffer.append( getInstance()._name )
-                .append( "_" )
-                .append( getInstance()._task.toString() )
                 .append( ".txt" );
         return buffer.toString();
     }

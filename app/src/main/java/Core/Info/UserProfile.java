@@ -23,7 +23,7 @@ public class UserProfile {
     static private UserProfile _instance = null;
 
     private UserProfile() {
-        _onRecord = false;
+        _onRecord = true;
     }
 
     static public boolean setProfile( String name, TaskType taskType ) {
@@ -67,6 +67,15 @@ public class UserProfile {
                 .append( "\n" )
                 .append( _task )
                 .append( "\n" );
+        return buffer.toString();
+    }
+
+    static public String getFileName() {
+        StringBuffer buffer = new StringBuffer();
+        buffer.append( getInstance()._name )
+                .append( "_" )
+                .append( getInstance()._task.toString() )
+                .append( ".txt" );
         return buffer.toString();
     }
 

@@ -44,6 +44,8 @@ public class RegisterOnClickListener implements View.OnClickListener {
                 break;
         }
 
+        Logger.clear();
+
         UserProfile.setProfile( name, taskType );
         if( name.equals( "" ) )
             name = "None";

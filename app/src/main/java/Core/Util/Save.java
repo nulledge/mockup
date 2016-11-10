@@ -16,7 +16,6 @@ import Core.Info.UserProfile;
  */
 public class Save {
     static private final String DIRECTORY = Environment.DIRECTORY_DOCUMENTS;
-    static private final String FILE = "log.txt";
 
     static public void SaveLog(Activity activity) {
         Permission.grantPermission( activity );
@@ -30,10 +29,12 @@ public class Save {
             if( dir.exists() == false )
                 dir.mkdirs();
 
-            File file = new File( dir, FILE );
+            File file = new File( dir, UserProfile.getFileName() );
 
             FileWriter fileWriter = new FileWriter( file );
-            fileWriter.append( UserProfile.getInstance().toString() );
+            fileWriter.append( UserProfile.getInstance().toString() )
+                    .append( "\n" )
+                    .append( Logger.publish() );
             fileWriter.flush();
             fileWriter.close();
 

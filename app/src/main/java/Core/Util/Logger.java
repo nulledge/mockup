@@ -13,23 +13,14 @@ import Core.Info.UserProfile;
  * Created by nulledge on 2016-11-08.
  */
 public class Logger {
-    static public Logger getInstance() {
-        if( _instance == null )
-            _instance = new Logger();
-        return _instance;
-    }
-    static private Logger _instance;
-
-    private Logger() {
-        _logs = new ArrayList<EventLog>();
-    }
+    static private ArrayList<EventLog> _logs = new ArrayList<EventLog>();
 
 
     static public boolean addEvent(Date date, EventType event, String resourceID ) {
         if( UserProfile.getInstance().onRecord() == false )
             return false;
         try {
-            getInstance()._logs.add( new EventLog ( date, event, resourceID ) );
+            _logs.add( new EventLog ( date, event, resourceID ) );
         }
         catch (Exception e) {
             return false;
@@ -44,21 +35,23 @@ public class Logger {
         );
     }
     static public boolean addEvent( EventType event, int resourceID ) {
+        String name = ContextResolver.getApplicationContext().getResources().getResourceName( resourceID );
         return addEvent(
                 Calendar.getInstance().getTime(),
                 event,
-                ContextResolver.getApplicationContext().getResources().getResourceName( resourceID )
+                name.split( "/" )[ 1 ].toString()
         );
     }
 
-    @Override
-     public String toString() {
+    static public void clear() {
+        _logs.clear();
+    }
+
+     static public String publish() {
         StringBuffer buffer = new StringBuffer();
-        for( EventLog log : getInstance()._logs ) {
+        for( EventLog log : _logs ) {
             buffer.append( log.toString() + "\n" );
         }
         return buffer.toString();
     }
-
-    private ArrayList<EventLog> _logs;
 }

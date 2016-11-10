@@ -32,9 +32,7 @@ public class Save {
             File file = new File( dir, UserProfile.getFileName() );
 
             FileWriter fileWriter = new FileWriter( file );
-            fileWriter.append( UserProfile.getInstance().toString() )
-                    .append( "\n" )
-                    .append( Logger.publish() );
+            fileWriter.append( Logger.publish() );
             fileWriter.flush();
             fileWriter.close();
 

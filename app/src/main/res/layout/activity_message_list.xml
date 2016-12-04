@@ -11,15 +11,6 @@
         android:padding="10dp">
 
         <TextView
-            android:id="@+id/messageListTextEdit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/activity_message_list_edit"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/lightBlue"
-            android:layout_alignParentLeft="true"/>
-
-        <TextView
             android:id="@+id/messageListTextMessage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

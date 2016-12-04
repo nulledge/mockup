@@ -110,26 +110,11 @@ public class MessageListActivity extends AppCompatActivity {
             adapter.addItem( messageData );
         }
 
-        findViewById(R.id.messageListTextEdit).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Logger.addEvent( EventType.Click, R.id.messageListTextEdit );
-                refreshListView();
-            }
-        });
         findViewById(R.id.messageListTextMessage).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Logger.addEvent(EventType.Click, R.id.messageListTextMessage );
                 refreshListView();
-            }
-        });
-        findViewById(R.id.messageListTextEdit).setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                Logger.addEvent( EventType.LongClick, R.id.messageListTextEdit );
-                refreshListView();
-                return true;
             }
         });
         findViewById(R.id.messageListTextMessage).setOnLongClickListener(new View.OnLongClickListener() {
@@ -140,9 +125,6 @@ public class MessageListActivity extends AppCompatActivity {
                 return true;
             }
         });
-
-        //UserProfile.getInstance().registerEventLogger( this, R.id.messageListTextEdit, RegisterType.Both );
-        //UserProfile.getInstance().registerEventLogger( this, R.id.messageListTextMessage, RegisterType.Both );
 
         if( UserProfile.getInstance().getTask() == TaskType.Task2 ) {
             ImageView buttonCreateMessage = (ImageView) findViewById(R.id.messageListButtonCreateMessage);
